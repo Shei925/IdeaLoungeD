@@ -4,79 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Welcome to IdeaLoungeD! Explore creative ideas and insights.">
-    <title>Welcome to IdeaLoungeD</title>
+    <meta name="description" content="Blogging Platform">
+    <title>Blogging Platform</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f5f5dc; /* Beige Brown Minimalist Color Palette */
-            color: #333;
-            background-image: url('https://example.com/your-background-image.jpg'); /* Replace with your book cover image */
-            background-size: cover;
-            background-repeat: no-repeat;
         }
 
         header {
             background-color: rgba(0, 0, 0, 0.7);
             color: #ffffff;
-            padding: 10px 20px;
+            padding: 10px;
             text-align: center;
-            position: relative;
-            z-index: 2;
         }
 
-        /* Burger menu styles */
-        #burger-menu-button {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        #burger-menu {
+        .burger-menu {
             display: none;
             position: absolute;
-            top: 50px;
-            right: 20px;
-            background-color: #333;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
             color: white;
-            padding: 10px;
-            border-radius: 5px;
+            padding: 20px;
+            overflow-y: auto;
         }
 
-        #burger-menu.visible {
+        .burger-menu.visible {
             display: block;
         }
 
-        #burger-menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        #burger-menu li {
-            padding: 10px;
-            border-bottom: 1px solid #444;
-        }
-
-        #burger-menu a {
+        .burger-menu button {
+            background: transparent;
             color: #fff;
-            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-bottom: 1px solid #444444;
+            width: 100%;
+            text-align: left;
         }
 
-        main {
+        .hide {
+            display: none;
+        }
+
+        .content {
             padding: 20px;
-            z-index: 2;
             position: relative;
-        }
-
-        h1 {
-            color: #ffffff;
         }
 
         footer {
@@ -84,153 +63,131 @@
             padding: 20px;
             background-color: rgba(0, 0, 0, 0.7);
             color: #fff;
-            z-index: 2;
         }
 
-        /* Post management styles */
-        #post-form {
-            display: none;
-            padding-top: 20px;
+        .post-list, .comment-list {
+            margin-bottom: 20px;
         }
 
-        #post-form input,
-        #post-form textarea {
-            width: calc(100% - 22px);
+        .comment {
+            background-color: #e0e0e0;
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        /* Styles for forms */
+        input[type="text"], textarea {
+            width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #333;
             border-radius: 5px;
         }
 
-        #settings {
-            display: none;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border: 1px solid #333;
-            border-radius: 5px;
-        }
-
-        /* Color picker styles */
-        .color-picker {
-            margin: 10px 0;
-        }
-
-        /* Comments styles */
-        #comment-section {
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border: 1px solid #333;
-            border-radius: 5px;
-        }
-
-        #comment-form input,
-        #comment-form textarea {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #333;
-            border-radius: 5px;
+        #comment-form {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <h1>Welcome to IdeaLoungeD!</h1>
-            <button id="burger-menu-button">☰</button>
-            <div id="burger-menu">
-                <ul>
-                    <li><a href="#" id="manage-posts">Manage Posts</a></li>
-                    <li><a href="#" id="view-visits">View Visits</a></li>
-                    <li><a href="#" id="manage-viewers">Manage Viewers</a></li>
-                    <li><a href="#" id="settings-button">Settings</a></li>
-                    <li><a href="#" id="logout">Logout</a></li>
-                </ul>
-                <div class="post-management">
-                    <h2>Post Management</h2>
-                    <button id="create-post-button">Create New Post</button>
-                    <div id="post-form">
-                        <input type="text" id="post-title" placeholder="Post Title">
-                        <textarea id="post-content" placeholder="Post Content"></textarea>
-                        <button id="save-post-button">Save Post</button>
-                    </div>
-                    <div id="post-list"></div> <!-- Display posts here -->
-                </div>
-                <div id="settings">
-                    <h2>Settings</h2>
-                    <label for="theme-color">Select Theme Color:</label>
-                    <input type="color" id="theme-color" class="color-picker"><br>
-                    <label for="font-color">Select Font Color:</label>
-                    <input type="color" id="font-color" class="color-picker"><br>
-                    <label for="background-color">Select Background Color:</label>
-                    <input type="color" id="background-color" class="color-picker"><br>
-                    <button id="apply-settings">Apply Settings</button>
-                </div>
-            </div>
-        </header>
+    <header>
+        <h1>Blogging Platform</h1>
+        <button id="toggle-menu">☰</button>
+    </header>
 
-        <main>
-            <h2>About Us</h2>
-            <p>At IdeaLoungeD, we believe in fostering creativity and innovation. Our platform is dedicated to sharing ideas that inspire and inform.</p>
-            <h2>Comment Section</h2>
-            <div id="comment-section">
-                <div id="comment-form">
-                    <textarea id="comment-textarea" placeholder="Enter your comment..."></textarea>
-                    <input id="comment-name" type="text" placeholder="Your name">
-                    <button id="comment-post-button">Post Comment</button>
-                </div>
-                <div id="comment-list"></div> <!-- Display comments here -->
-            </div>
-        </main>
-
-        <footer>
-            <p>© 2023 IdeaLoungeD. All Rights Reserved.</p>
-        </footer>
+    <div class="burger-menu" id="burger-menu">
+        <div id="menu-content">
+            <h2>Menu</h2>
+            <button id="home-button">Home</button>
+            <button id="create-post-button">Create Post</button>
+            <button id="my-posts-button">My Posts</button>
+            <button id="manage-content-button">Manage Content</button>
+            <button id="account-management-button">Account Management</button>
+            <button id="appearance-button">Appearance</button>
+            <button id="analytics-button">Analytics</button>
+            <button id="community-button">Community</button>
+            <button id="help-support-button">Help & Support</button>
+            <button id="logout-button">Logout</button>
+        </div>
     </div>
 
+    <div class="content" id="main-content">
+        <div id="home" class="hide"><h2>Welcome to the Home Page!</h2></div>
+        <div id="create-post" class="hide">
+            <h2>Create New Blog Post</h2>
+            <input type="text" id="post-title" placeholder="Post Title">
+            <textarea id="post-content" placeholder="Post Content"></textarea>
+            <button id="save-post-button">Save Post</button>
+            <div class="post-list" id="post-list"></div>
+        </div>
+        <div id="my-posts" class="hide">
+            <h2>My Posts</h2>
+            <div class="post-list" id="my-post-list"></div>
+        </div>
+        <div id="manage-content" class="hide"><h2>Manage Content</h2><!-- Additional content goes here --></div>
+        <div id="account-management" class="hide"><h2>Account Management</h2><!-- Additional content goes here --></div>
+        <div id="appearance" class="hide"><h2>Appearance Settings</h2><!-- Additional content goes here --></div>
+        <div id="analytics" class="hide"><h2>Analytics</h2><!-- Additional content goes here --></div>
+        <div id="community" class="hide"><h2>Community</h2><!-- Additional content goes here --></div>
+        <div id="help-support" class="hide"><h2>Help & Support</h2><!-- Additional content goes here --></div>
+
+        <h2>Comment Section</h2>
+        <div id="comment-form">
+            <input type="text" id="comment-name" placeholder="Your Name">
+            <textarea id="comment-text" placeholder="Your Comment"></textarea>
+            <button id="post-comment-button">Post Comment</button>
+        </div>
+        <div class="comment-list" id="comment-list"></div>
+    </div>
+
+    <footer>
+        <p>© 2023 Blogging Platform. All Rights Reserved.</p>
+    </footer>
+
     <script>
-        // Burger Menu script
-        const burgerMenuButton = document.getElementById('burger-menu-button');
+        const toggleMenuButton = document.getElementById('toggle-menu');
         const burgerMenu = document.getElementById('burger-menu');
-        const settingsButton = document.getElementById('settings-button');
-        const settings = document.getElementById('settings');
-        const applySettingsButton = document.getElementById('apply-settings');
-        const themeColorInput = document.getElementById('theme-color');
-        const fontColorInput = document.getElementById('font-color');
-        const backgroundColorInput = document.getElementById('background-color');
+        const mainContent = document.getElementById('main-content');
 
-        burgerMenuButton.addEventListener('click', () => {
-            burgerMenu.classList.toggle('visible');
-            settings.style.display = 'none'; // Hide settings when menu is toggled
-        });
-
-        settingsButton.addEventListener('click', () => {
-            settings.style.display = settings.style.display === 'none' ? 'block' : 'none';
-            burgerMenu.classList.remove('visible'); // Close the menu
-        });
-
-        applySettingsButton.addEventListener('click', () => {
-            const newThemeColor = themeColorInput.value;
-            const newFontColor = fontColorInput.value;
-            const newBackgroundColor = backgroundColorInput.value;
-
-            document.body.style.backgroundColor = newBackgroundColor;
-            document.body.style.color = newFontColor; // Apply font color
-            document.querySelector('header').style.backgroundColor = newThemeColor; // Change header background color
-        });
-
-        // Post Management script
         const createPostButton = document.getElementById('create-post-button');
-        const postForm = document.getElementById('post-form');
+        const savePostButton = document.getElementById('save-post-button');
         const postTitleInput = document.getElementById('post-title');
         const postContentTextArea = document.getElementById('post-content');
-        const savePostButton = document.getElementById('save-post-button');
         const postList = document.getElementById('post-list');
 
-        createPostButton.addEventListener('click', () => {
-            postForm.style.display = 'block';
+        const commentNameInput = document.getElementById('comment-name');
+        const commentTextArea = document.getElementById('comment-text');
+        const postCommentButton = document.getElementById('post-comment-button');
+        const commentList = document.getElementById('comment-list');
+
+        // Hide all content sections
+        function hideAllSections() {
+            document.querySelectorAll('.content > div').forEach(section => section.classList.add('hide'));
+        }
+
+        // Show a specific content section
+        function showSection(sectionId) {
+            hideAllSections();
+            document.getElementById(sectionId).classList.remove('hide');
+            burgerMenu.classList.remove('visible'); // Close the menu
+        }
+
+        toggleMenuButton.addEventListener('click', () => {
+            burgerMenu.classList.toggle('visible');
+            hideAllSections(); // Hide main content when the menu is opened
         });
+
+        createPostButton.addEventListener('click', () => showSection('create-post'));
+        document.getElementById('my-posts-button').addEventListener('click', () => showSection('my-posts'));
+        document.getElementById('manage-content-button').addEventListener('click', () => showSection('manage-content'));
+        document.getElementById('account-management-button').addEventListener('click', () => showSection('account-management'));
+        document.getElementById('appearance-button').addEventListener('click', () => showSection('appearance'));
+        document.getElementById('analytics-button').addEventListener('click', () => showSection('analytics'));
+        document.getElementById('community-button').addEventListener('click', () => showSection('community'));
+        document.getElementById('help-support-button').addEventListener('click', () => showSection('help-support'));
+        document.getElementById('logout-button').addEventListener('click', () => alert('Logged out!')); // Placeholder for logout
 
         savePostButton.addEventListener('click', () => {
             const postTitle = postTitleInput.value.trim();
@@ -238,30 +195,25 @@
 
             if (postTitle && postContent) {
                 const post = document.createElement('div');
-                post.innerHTML = `<h3>${postTitle}</h3><p>${postContent}</p>`;
+                post.innerHTML = `<strong>${postTitle}</strong><p>${postContent}</p>`;
                 postList.appendChild(post);
-                postForm.style.display = 'none';
                 postTitleInput.value = '';
                 postContentTextArea.value = '';
             }
         });
 
-        // Comment section script
-        const commentTextarea = document.getElementById('comment-textarea');
-        const commentNameInput = document.getElementById('comment-name');
-        const commentPostButton = document.getElementById('comment-post-button');
-        const commentList = document.getElementById('comment-list');
+        postCommentButton.addEventListener('click', () => {
+            const name = commentNameInput.value.trim();
+            const commentText = commentTextArea.value.trim();
+            const date = new Date().toLocaleString();
 
-        commentPostButton.addEventListener('click', () => {
-            const commentText = commentTextarea.value.trim();
-            const commentName = commentNameInput.value.trim();
-
-            if (commentText && commentName) {
+            if (name && commentText) {
                 const comment = document.createElement('div');
-                comment.innerHTML = `<strong>${commentName}:</strong> ${commentText}`;
+                comment.className = 'comment';
+                comment.innerHTML = `<strong>${name}</strong> (${date}): ${commentText}`;
                 commentList.appendChild(comment);
-                commentTextarea.value = '';
                 commentNameInput.value = '';
+                commentTextArea.value = '';
             }
         });
     </script>
