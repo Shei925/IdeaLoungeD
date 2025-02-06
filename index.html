@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Blogging Platform">
-    <title>Blogging Platform</title>
+    <meta name="description" content="Welcome to IdeaLoungeD! A place for creativity and ideas.">
+    <title>Welcome to IdeaLoungeD!</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,6 +32,7 @@
             color: white;
             padding: 20px;
             overflow-y: auto;
+            z-index: 10;
         }
 
         .burger-menu.visible {
@@ -49,10 +50,6 @@
             text-align: left;
         }
 
-        .hide {
-            display: none;
-        }
-
         .content {
             padding: 20px;
             position: relative;
@@ -65,7 +62,8 @@
             color: #fff;
         }
 
-        .post-list, .comment-list {
+        .post-list,
+        .comment-list {
             margin-bottom: 20px;
         }
 
@@ -76,8 +74,8 @@
             border-radius: 5px;
         }
 
-        /* Styles for forms */
-        input[type="text"], textarea {
+        input[type="text"],
+        textarea {
             width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 10px;
@@ -88,12 +86,18 @@
         #comment-form {
             margin-bottom: 20px;
         }
+
+        #drafts {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>Blogging Platform</h1>
+        <h1>Welcome to IdeaLoungeD!</h1>
         <button id="toggle-menu">☰</button>
     </header>
 
@@ -101,7 +105,7 @@
         <div id="menu-content">
             <h2>Menu</h2>
             <button id="home-button">Home</button>
-            <button id="create-post-button">Create Post</button>
+            <button id="create-post-button">📝 Create Post</button>
             <button id="my-posts-button">My Posts</button>
             <button id="manage-content-button">Manage Content</button>
             <button id="account-management-button">Account Management</button>
@@ -114,36 +118,58 @@
     </div>
 
     <div class="content" id="main-content">
-        <div id="home" class="hide"><h2>Welcome to the Home Page!</h2></div>
+        <div id="home" class="hide">
+            <h2>Welcome to the Home Page!</h2>
+        </div>
         <div id="create-post" class="hide">
             <h2>Create New Blog Post</h2>
-            <input type="text" id="post-title" placeholder="Post Title">
-            <textarea id="post-content" placeholder="Post Content"></textarea>
-            <button id="save-post-button">Save Post</button>
-            <div class="post-list" id="post-list"></div>
+            <input type="text" id="post-title" placeholder="Post Title" required>
+            <textarea id="post-content" placeholder="Post Content" required></textarea>
+            <button id="save-draft-button">Save Draft</button>
+            <button id="publish-post-button">Publish Post</button>
+            <h3>Saved Drafts:</h3>
+            <div id="drafts" class="post-list"></div>
         </div>
         <div id="my-posts" class="hide">
             <h2>My Posts</h2>
             <div class="post-list" id="my-post-list"></div>
         </div>
-        <div id="manage-content" class="hide"><h2>Manage Content</h2><!-- Additional content goes here --></div>
-        <div id="account-management" class="hide"><h2>Account Management</h2><!-- Additional content goes here --></div>
-        <div id="appearance" class="hide"><h2>Appearance Settings</h2><!-- Additional content goes here --></div>
-        <div id="analytics" class="hide"><h2>Analytics</h2><!-- Additional content goes here --></div>
-        <div id="community" class="hide"><h2>Community</h2><!-- Additional content goes here --></div>
-        <div id="help-support" class="hide"><h2>Help & Support</h2><!-- Additional content goes here --></div>
+        <div id="manage-content" class="hide">
+            <h2>Manage Content</h2>
+            <!-- Additional content goes here -->
+        </div>
+        <div id="account-management" class="hide">
+            <h2>Account Management</h2>
+            <!-- Additional content goes here -->
+        </div>
+        <div id="appearance" class="hide">
+            <h2>Appearance Settings</h2>
+            <!-- Additional content goes here -->
+        </div>
+        <div id="analytics" class="hide">
+            <h2>Analytics</h2>
+            <!-- Additional content goes here -->
+        </div>
+        <div id="community" class="hide">
+            <h2>Community</h2>
+            <!-- Additional content goes here -->
+        </div>
+        <div id="help-support" class="hide">
+            <h2>Help & Support</h2>
+            <!-- Additional content goes here -->
+        </div>
 
         <h2>Comment Section</h2>
         <div id="comment-form">
-            <input type="text" id="comment-name" placeholder="Your Name">
-            <textarea id="comment-text" placeholder="Your Comment"></textarea>
+            <input type="text" id="comment-name" placeholder="Your Name" required>
+            <textarea id="comment-text" placeholder="Your Comment" required></textarea>
             <button id="post-comment-button">Post Comment</button>
         </div>
         <div class="comment-list" id="comment-list"></div>
     </div>
 
     <footer>
-        <p>© 2023 Blogging Platform. All Rights Reserved.</p>
+        <p>© 2023 IdeaLoungeD. All Rights Reserved.</p>
     </footer>
 
     <script>
@@ -152,10 +178,12 @@
         const mainContent = document.getElementById('main-content');
 
         const createPostButton = document.getElementById('create-post-button');
-        const savePostButton = document.getElementById('save-post-button');
+        const saveDraftButton = document.getElementById('save-draft-button');
+        const publishPostButton = document.getElementById('publish-post-button');
         const postTitleInput = document.getElementById('post-title');
         const postContentTextArea = document.getElementById('post-content');
-        const postList = document.getElementById('post-list');
+        const draftsContainer = document.getElementById('drafts');
+        const myPostList = document.getElementById('my-post-list');
 
         const commentNameInput = document.getElementById('comment-name');
         const commentTextArea = document.getElementById('comment-text');
@@ -171,15 +199,14 @@
         function showSection(sectionId) {
             hideAllSections();
             document.getElementById(sectionId).classList.remove('hide');
-            burgerMenu.classList.remove('visible'); // Close the menu
         }
 
         toggleMenuButton.addEventListener('click', () => {
             burgerMenu.classList.toggle('visible');
-            hideAllSections(); // Hide main content when the menu is opened
         });
 
         createPostButton.addEventListener('click', () => showSection('create-post'));
+        document.getElementById('home-button').addEventListener('click', () => showSection('home'));
         document.getElementById('my-posts-button').addEventListener('click', () => showSection('my-posts'));
         document.getElementById('manage-content-button').addEventListener('click', () => showSection('manage-content'));
         document.getElementById('account-management-button').addEventListener('click', () => showSection('account-management'));
@@ -189,16 +216,34 @@
         document.getElementById('help-support-button').addEventListener('click', () => showSection('help-support'));
         document.getElementById('logout-button').addEventListener('click', () => alert('Logged out!')); // Placeholder for logout
 
-        savePostButton.addEventListener('click', () => {
+        saveDraftButton.addEventListener('click', () => {
+            const postTitle = postTitleInput.value.trim();
+            const postContent = postContentTextArea.value.trim();
+
+            if (postTitle && postContent) {
+                const draft = document.createElement('div');
+                draft.innerHTML = `<strong>${postTitle}</strong><p>${postContent}</p>`;
+                draftsContainer.appendChild(draft);
+                postTitleInput.value = ''; // Clear input fields
+                postContentTextArea.value = '';
+            } else {
+                alert("Please fill in both title and content.");
+            }
+        });
+
+        publishPostButton.addEventListener('click', () => {
             const postTitle = postTitleInput.value.trim();
             const postContent = postContentTextArea.value.trim();
 
             if (postTitle && postContent) {
                 const post = document.createElement('div');
                 post.innerHTML = `<strong>${postTitle}</strong><p>${postContent}</p>`;
-                postList.appendChild(post);
-                postTitleInput.value = '';
+                myPostList.appendChild(post);
+                postTitleInput.value = ''; // Clear input fields
                 postContentTextArea.value = '';
+                alert("Post published successfully!");
+            } else {
+                alert("Please fill in both title and content.");
             }
         });
 
@@ -214,6 +259,8 @@
                 commentList.appendChild(comment);
                 commentNameInput.value = '';
                 commentTextArea.value = '';
+            } else {
+                alert("Please fill in both name and comment.");
             }
         });
     </script>
