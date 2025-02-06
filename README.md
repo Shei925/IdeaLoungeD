@@ -42,7 +42,7 @@
 <body>
 
 <header>
-    <h1>Welcome to Idea Lounge D</h1>
+    <h1>Welcome to IdeaLoungeD</h1>
 </header>
 
 <main>
@@ -57,7 +57,7 @@
 </main>
 
 <footer>
-    <p>© 2023 Idea Lounge D. All Rights Reserved.</p>
+    <p>© 2023 IdeaLoungeD. All Rights Reserved.</p>
 </footer>
 
 </body>
