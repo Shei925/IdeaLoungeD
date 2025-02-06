@@ -6,21 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Welcome to IdeaLoungeD! Explore creative ideas and insights.">
     <title>Welcome to IdeaLoungeD</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #e6d5d0; /* Light brown background */
+            background-color: #d2691e; /* Chocolate brown */
+            color: black;
+            background-image: url('https://example.com/your-background-image.jpg'); /* Replace with your book cover image */
+            background-size: cover;
+            background-repeat: no-repeat;
         }
 
         header {
-            background-color: #333; /* Dark background for contrast */
+            background-color: rgba(0, 0, 0, 0.7);
             color: #ffffff;
             padding: 10px 20px;
             text-align: center;
             position: relative;
+            z-index: 2;
         }
 
         /* Burger menu styles */
@@ -67,11 +71,12 @@
 
         main {
             padding: 20px;
-            color: #333; /* Dark text for easy reading */
+            z-index: 2;
+            position: relative;
         }
 
         h1 {
-            color: #333;
+            color: #ffffff;
         }
 
         p {
@@ -81,14 +86,15 @@
         footer {
             text-align: center;
             padding: 20px;
-            background-color: #333;
+            background-color: rgba(0, 0, 0, 0.7);
             color: #fff;
+            z-index: 2;
         }
 
         /* Comment section styles */
         #comment-section {
             padding: 20px;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.8);
             border: 1px solid #333;
             border-radius: 5px;
         }
@@ -106,24 +112,18 @@
             border-radius: 5px;
         }
 
-        /* Comment list styles */
-        #comment-list div {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
+        /* Settings styles */
+        #settings {
+            display: none;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #333;
+            border-radius: 5px;
         }
 
-        @media only screen and (max-width: 600px) {
-            header, footer {
-                padding: 10px 10px;
-            }
-
-            main {
-                padding: 10px;
-            }
-
-            #comment-form {
-                padding: 10px;
-            }
+        /* Color picker styles */
+        .color-picker {
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -131,14 +131,14 @@
 <body>
     <div class="container">
         <header>
-            <h1>Welcome to IdeaLoungeD</h1>
+            <h1>Welcome to IdeaLoungeD!</h1>
             <button id="burger-menu-button">☰</button>
             <div id="burger-menu">
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Get Involved</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#" id="manage-viewers">Manage Viewers</a></li>
+                    <li><a href="#" id="view-visits">View Visits</a></li>
+                    <li><a href="#" id="settings-button">Settings</a></li>
+                    <li><a href="#" id="logout">Logout</a></li>
                 </ul>
             </div>
         </header>
@@ -166,45 +166,66 @@
             </div>
         </main>
 
+        <div id="settings">
+            <h2>Settings</h2>
+            <label for="theme-color">Select Theme Color:</label>
+            <input type="color" id="theme-color" class="color-picker"><br>
+            <label for="font-color">Select Font Color:</label>
+            <input type="color" id="font-color" class="color-picker"><br>
+            <button id="apply-settings">Apply Settings</button>
+        </div>
+
         <footer>
             <p>© 2023 IdeaLoungeD. All Rights Reserved.</p>
         </footer>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Burger menu script
+        const burgerMenuButton = document.getElementById('burger-menu-button');
+        const burgerMenu = document.getElementById('burger-menu');
+        const settingsButton = document.getElementById('settings-button');
+        const settings = document.getElementById('settings');
+        const applySettingsButton = document.getElementById('apply-settings');
+        const themeColorInput = document.getElementById('theme-color');
+        const fontColorInput = document.getElementById('font-color');
+
+        burgerMenuButton.addEventListener('click', () => {
+            burgerMenu.classList.toggle('visible');
+            settings.style.display = 'none'; // Hide settings when menu is toggled
+        });
+
+        settingsButton.addEventListener('click', () => {
+            settings.style.display = settings.style.display === 'none' ? 'block' : 'none';
+            burgerMenu.classList.remove('visible'); // Close the menu
+        });
+
+        applySettingsButton.addEventListener('click', () => {
+            const newThemeColor = themeColorInput.value;
+            const newFontColor = fontColorInput.value;
+            document.body.style.backgroundColor = newThemeColor;
+            document.body.style.color = newFontColor;
+        });
+
+        // Comment section script
+        const commentTextarea = document.getElementById('comment-textarea');
+        const commentNameInput = document.getElementById('comment-name');
+        const commentPostButton = document.getElementById('comment-post-button');
+        const commentList = document.getElementById('comment-list');
+
+        commentPostButton.addEventListener('click', () => {
+            const commentText = commentTextarea.value.trim();
+            const commentName = commentNameInput.value.trim();
+
+            if (commentText && commentName) {
+                const comment = document.createElement('div');
+                comment.innerHTML = `<strong>${commentName}:</strong> ${commentText}`;
+                commentList.appendChild(comment);
+                commentTextarea.value = '';
+                commentNameInput.value = '';
+            }
+        });
+    </script>
 </body>
 
 </html>
-
-
-// Burger menu script
-const burgerMenuButton = document.getElementById('burger-menu-button');
-const burgerMenu = document.getElementById('burger-menu');
-
-burgerMenuButton.addEventListener('click', () => {
-    burgerMenu.classList.toggle('visible');
-});
-
-// Comment section script
-const commentForm = document.getElementById('comment-form');
-const commentTextarea = document.getElementById('comment-textarea');
-const commentNameInput = document.getElementById('comment-name');
-const commentPostButton = document.getElementById('comment-post-button');
-const commentList = document.getElementById('comment-list');
-
-commentPostButton.addEventListener('click', () => {
-    const commentText = commentTextarea.value.trim();
-    const commentName = commentNameInput.value.trim();
-    
-    if (commentText && commentName) {
-        const comment = document.createElement('div');
-        comment.innerHTML = `
-            <p><strong>${commentName}</strong>: ${commentText}</p>
-        `;
-        commentList.appendChild(comment);
-
-        // Clear the input fields
-        commentTextarea.value = '';
-        commentNameInput.value = '';
-    }
-});
