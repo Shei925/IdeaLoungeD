@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Welcome to Idea Lounge D! Explore creative ideas and insights.">
-    <title>Welcome to Idea Lounge D</title>
+    <meta name="description" content="Welcome to IdeaLoungeD! Explore creative ideas and insights.">
+    <title>Welcome to IdeaLoungeD</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f4f4f4;black and brown
         }
         header {
             background-color: #333;
