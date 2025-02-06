@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Welcome to IdeaLoungeD! A place for creativity and ideas.">
-    <title>Welcome to IdeaLoungeD!</title>
+    <title>WELCOME TO IdeaLoungeD!</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -97,7 +97,7 @@
 
 <body>
     <header>
-        <h1>Welcome to IdeaLoungeD!</h1>
+        <h1>WELCOME TO IdeaLoungeD!</h1>
         <button id="toggle-menu">☰</button>
     </header>
 
@@ -195,6 +195,12 @@
             document.querySelectorAll('.content > div').forEach(section => section.classList.add('hide'));
         }
 
+        // Show the home section when navigating back
+        function showHomeSection() {
+            hideAllSections();
+            document.getElementById('home').classList.remove('hide');
+        }
+
         // Show a specific content section
         function showSection(sectionId) {
             hideAllSections();
@@ -203,10 +209,16 @@
 
         toggleMenuButton.addEventListener('click', () => {
             burgerMenu.classList.toggle('visible');
+            mainContent.classList.toggle('blur'); // Optional: add blur effect
         });
 
-        createPostButton.addEventListener('click', () => showSection('create-post'));
-        document.getElementById('home-button').addEventListener('click', () => showSection('home'));
+        createPostButton.addEventListener('click', () => {
+            showSection('create-post');
+        });
+        
+        document.getElementById('home-button').addEventListener('click', () => {
+            showHomeSection();
+        });
         document.getElementById('my-posts-button').addEventListener('click', () => showSection('my-posts'));
         document.getElementById('manage-content-button').addEventListener('click', () => showSection('manage-content'));
         document.getElementById('account-management-button').addEventListener('click', () => showSection('account-management'));
@@ -226,6 +238,7 @@
                 draftsContainer.appendChild(draft);
                 postTitleInput.value = ''; // Clear input fields
                 postContentTextArea.value = '';
+                alert("Draft saved successfully!");
             } else {
                 alert("Please fill in both title and content.");
             }
