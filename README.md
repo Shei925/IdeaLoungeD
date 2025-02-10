@@ -11,11 +11,11 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5dc; /* Beige Brown Minimalist Color Palette */
+            background-color: #ADD8E6; /* Light Blue for a calming effect */
         }
 
         header {
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(139, 69, 19, 0.7); /* Dark Brown with transparency */
             color: #ffffff;
             padding: 10px;
             text-align: center;
@@ -24,11 +24,11 @@
         .burger-menu {
             display: none;
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 0;
+            left: 0;
             width: 250px;
-            height: calc(100vh - 20px);
-            background-color: rgba(0, 0, 0, 0.9);
+            height: 100vh;
+            background-color: rgba(139, 69, 19, 0.9); /* Dark Brown with transparency */
             color: white;
             padding: 20px;
             overflow-y: auto;
@@ -42,6 +42,8 @@
         #main-content {
             padding: 20px;
             position: relative;
+            background-color: #E6E6FA; /* Light Purple for content area */
+            margin-left: 260px; /* Space for burger menu */
         }
 
         .content {
@@ -55,7 +57,7 @@
             position: absolute;
             top: 0;
             right: 0;
-            background-color: #ccc;
+            background-color: #C3B091; /* Khaki for button */
             border: none;
             padding: 10px;
             cursor: pointer;
@@ -63,13 +65,13 @@
         }
 
         #main-content .top-btn:hover {
-            background-color: #999;
+            background-color: #D2B48C; /* Light Brown for hover effect */
         }
 
         footer {
             text-align: center;
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(139, 69, 19, 0.7); /* Dark Brown with transparency */
             color: #fff;
             clear: both;
         }
@@ -80,7 +82,7 @@
         }
 
         .comment {
-            background-color: #e0e0e0;
+            background-color: #e0e0e0; /* Light Gray for comments */
             padding: 5px;
             margin: 5px 0;
             border-radius: 5px;
@@ -121,6 +123,12 @@
 
         .menu-item:hover {
             text-decoration: underline;
+        }
+
+        .create-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: #000;
         }
     </style>
 </head>
@@ -191,7 +199,7 @@
                 <div class="menu-item">View Stats</div>
                 <div class="submenu">
                     <div class="menu-item" id="post-views-button">Post Views</div>
-                    <div class="menu-item" id="user-engagement-button">User Engagement</div>
+                    <div class="menu-item" id="user-engagement-button">User  Engagement</div>
                     <div class="menu-item" id="likes-comments-button">Likes and Comments</div>
                 </div>
                 <div class="menu-item" id="audience-insights-button">Audience Insights</div>
@@ -225,6 +233,7 @@
         <button class="top-btn" id="top-button">&larr; Go Back</button>
         <div class="content" id="home" style="display:block;">
             <h2>Welcome to the Home Page!</h2>
+            <div class="create-icon" id="create-new-post-icon">✍️</div>
         </div>
         <div class="content" id="create-new-post" class="hide">
             <h2>Create New Post</h2>
@@ -239,6 +248,7 @@
 
     <footer>
         <p>At IdeaLoungeD, we believe in fostering creativity and innovation. Our platform is dedicated to sharing ideas that inspire.</p>
+        <p><a href="#about-us">About Us</a> | <a href="#privacy-policy">Privacy Policy</a> | <a href="#mission">Mission</a></p>
         <p>&copy; 2023 IdeaLoungeD. All Rights Reserved.</p>
     </footer>
 
@@ -246,6 +256,7 @@
         const toggleMenuButton = document.getElementById('toggle-menu');
         const burgerMenu = document.getElementById('burger-menu');
         const topButton = document.getElementById('top-button');
+        const createNewPostIcon = document.getElementById('create-new-post-icon');
 
         const createPostButton = document.getElementById('create-post-button');
         const newBlogPostButton = document.getElementById('new-blog-post-button');
@@ -335,8 +346,40 @@
         helpSupportButton.addEventListener('click', () => toggleSubmenu('help-support-submenu'));
 
         newBlogPostButton.addEventListener('click', () => showSection('create-new-post'));
-        
-        // More event listeners can be added as needed for other buttons and sections
+
+        // Create new post icon functionality
+        createNewPostIcon.addEventListener('click', () => {
+            showSection('create-new-post');
+        });
+
+        // Comment functionality
+        const comments = JSON.parse(localStorage.getItem('comments')) || [];
+
+        function renderComments() {
+            const commentList = document.getElementById('drafts');
+            commentList.innerHTML = '';
+            comments.forEach(comment => {
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.textContent = comment;
+                commentList.appendChild(commentDiv);
+            });
+        }
+
+        document.getElementById('publish-post-button').addEventListener('click', () => {
+            const postTitle = document.getElementById('post-title').value;
+            const postContent = document.getElementById('post-content').value;
+            if (postTitle && postContent) {
+                comments.push(`${postTitle}: ${postContent}`);
+                localStorage.setItem('comments', JSON.stringify(comments));
+                renderComments();
+                document.getElementById('post-title').value = '';
+                document.getElementById('post-content').value = '';
+            }
+        });
+
+        // Initial render of comments
+        renderComments();
     </script>
 </body>
 
