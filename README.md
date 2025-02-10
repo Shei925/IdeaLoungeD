@@ -98,6 +98,22 @@
         .toolbar button {
             margin-right: 5px;
         }
+
+        .comment {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .reaction-buttons {
+            margin-top: 10px;
+        }
+
+        .reaction-buttons button {
+            margin-right: 5px;
+        }
     </style>
 </head>
 
@@ -132,7 +148,8 @@
     <div id="main-content">
         <div class="content" id="home" style="display:block;">
             <h2>Welcome to the Home Page!</h2>
-            <div class="create-icon" id="create-new-post-icon">✍️</div>
+            <h3>Published Posts:</h3>
+            <div id="published-posts-list"></div>
         </div>
         <div class="content" id="create-new-post" class="hide" style="display:none;">
             <h2>Create New Post</h2>
@@ -208,6 +225,7 @@
         function showHomeSection() {
             document.querySelectorAll('.content').forEach(section => section.style.display = 'none');
             document.getElementById('home').style.display = 'block';
+            renderPublishedPosts(); // Render published posts on home
         }
 
         // Show create post section
@@ -225,24 +243,28 @@
         myPostsButton.addEventListener('click', () => {
             burgerMenu.classList.remove('visible'); // Close menu
             showSection('my-posts');
+            renderMyPosts(); // Render my posts
         });
 
         // Show all posts section
         allPostsButton.addEventListener('click', () => {
             burgerMenu.classList.remove('visible'); // Close menu
             showSection('all-posts');
+            renderAllPosts(); // Render all posts
         });
 
         // Show drafts section
         draftsButton.addEventListener('click', () => {
             burgerMenu.classList.remove('visible'); // Close menu
             showSection('drafts-section');
+            renderDrafts(); // Render drafts
         });
 
         // Show trash section
         trashButton.addEventListener('click', () => {
             burgerMenu.classList.remove('visible'); // Close menu
             showSection('trash');
+            renderTrash(); // Render trash
         });
 
         // Show a specific content section
@@ -284,9 +306,17 @@
             drafts.forEach((draft, index) => {
                 const draftDiv = document.createElement('div');
                 draftDiv.className = 'comment';
-                draftDiv.innerHTML = `Draft ${index + 1}: ${draft}`;
+                draftDiv.innerHTML = `Draft ${index + 1}: ${draft} <button onclick="deleteDraft(${index})">Delete</button>`;
                 draftsList.appendChild(draftDiv);
             });
+        }
+
+        // Delete draft functionality
+        function deleteDraft(index) {
+            const drafts = JSON.parse(localStorage.getItem('drafts')) || [];
+            drafts.splice(index, 1);
+            localStorage.setItem('drafts', JSON.stringify(drafts));
+            renderDrafts();
         }
 
         // Render published posts
@@ -297,25 +327,11 @@
             publishedPosts.forEach((post, index) => {
                 const postDiv = document.createElement('div');
                 postDiv.className = 'comment';
-                postDiv.innerHTML = `Post ${index + 1}: ${post}`;
+                postDiv.innerHTML = `Post ${index + 1}: ${post} <div class="reaction-buttons"><button onclick="reactToPost(${index}, 'like')">👍</button><button onclick="reactToPost(${index}, 'love')">❤️</button><button onclick="reactToPost(${index}, 'laugh')">😂</button><button onclick="reactToPost(${index}, 'sad')">😢</button><button onclick="reactToPost(${index}, 'angry')">😡</button></div><div class="comment-section"><input type="text" placeholder="Add a comment..." id="comment-input-${index}"><button onclick="addComment(${index})">Comment</button><div id="comments-${index}"></div></div>`;
                 publishedPostsList.appendChild(postDiv);
             });
         }
 
-        // Change font color
-        function changeFontColor(color) {
-            document.execCommand('foreColor', false, color);
-        }
-
-        // Change font size
-        function changeFontSize(size) {
-            document.execCommand('fontSize', false, size);
-        }
-
-        // Initial render of drafts and published posts
-        renderDrafts();
-        renderPublishedPosts();
-    </script>
-</body>
-
-</html>
+        // React to post functionality
+        function reactToPost(postIndex, reaction) {
+            alert(` ⬤
