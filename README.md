@@ -12,11 +12,11 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #ADD8E6; /* Light Blue for a calming effect */
+            background-color: #f5f1e6; /* Creamy Beige */
         }
 
         header {
-            background-color: rgba(139, 69, 19, 0.7); /* Dark Brown with transparency */
+            background-color: rgba(75, 58, 47, 0.9); /* Darker Brown */
             color: #ffffff;
             padding: 10px;
             text-align: center;
@@ -35,7 +35,7 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background-color: rgba(139, 69, 19, 0.9); /* Dark Brown with transparency */
+            background-color: rgba(75, 58, 47, 0.95); /* Darker Brown with transparency */
             color: white;
             padding: 20px;
             overflow-y: auto;
@@ -49,7 +49,7 @@
         #main-content {
             padding: 20px;
             position: relative;
-            background-color: #E6E6FA; /* Light Purple for content area */
+            background-color: #ffffff; /* White for content area */
         }
 
         .content {
@@ -66,28 +66,29 @@
 
         .menu-item:hover {
             text-decoration: underline;
+            color: #d4b993; /* Soft Dusty Gold */
         }
 
         footer {
             text-align: center;
             padding: 20px;
-            background-color: rgba(139, 69, 19, 0.7); /* Dark Brown with transparency */
+            background-color: rgba(75, 58, 47, 0.9); /* Darker Brown with transparency */
             color: #fff;
             clear: both;
         }
 
         .editor {
-            border: 1px solid #ccc;
+            border: 1px solid #d4b993; /* Dusty Gold for borders */
             padding: 10px;
             height: 400px;
             overflow-y: auto;
-            background-color: #fff;
+            background-color: #fdf6e3; /* Soft Beige */
         }
 
         .create-icon {
             font-size: 24px;
             cursor: pointer;
-            color: #000;
+            color: #4B3C31; /* Dark Coffee Color */
         }
     </style>
 </head>
@@ -137,7 +138,7 @@
 
     <footer>
         <p>At IdeaLoungeD, we believe in fostering creativity and innovation. Our platform is dedicated to sharing ideas that inspire.</p>
-        <p><a href="#about-us">About Us</a> | <a href="#privacy-policy">Privacy Policy</a> | <a href="#mission">Mission</a></p>
+        <p><a href="#about-us" style="color:#d4b993;">About Us</a> | <a href="#privacy-policy" style="color:#d4b993;">Privacy Policy</a> | <a href="#mission" style="color:#d4b993;">Mission</a></p>
         <p>&copy; 2023 IdeaLoungeD. All Rights Reserved.</p>
     </footer>
 
