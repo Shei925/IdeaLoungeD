@@ -334,4 +334,64 @@
 
         // React to post functionality
         function reactToPost(postIndex, reaction) {
-            alert(` ⬤
+            alert(`You reacted with: ${reaction}`);
+            // Here you can implement further functionality for reactions
+        }
+
+        // Add comment functionality
+        function addComment(postIndex) {
+            const commentInput = document.getElementById(`comment-input-${postIndex}`);
+            const commentText = commentInput.value;
+            if (commentText) {
+                const commentsDiv = document.getElementById(`comments-${postIndex}`);
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.innerHTML = commentText;
+                commentsDiv.appendChild(commentDiv);
+                commentInput.value = ''; // Clear input
+            }
+        }
+
+        // Render trash
+        function renderTrash() {
+            const trash = JSON.parse(localStorage.getItem('trash')) || [];
+            const trashList = document.getElementById('trash-list');
+            trashList.innerHTML = '';
+            trash.forEach((item, index) => {
+                const trashDiv = document.createElement('div');
+                trashDiv.className = 'comment';
+                trashDiv.innerHTML = `Deleted Post ${index + 1}: ${item} <button onclick="restorePost(${index})">Restore</button>`;
+                trashList.appendChild(trashDiv);
+            });
+        }
+
+        // Restore post functionality
+        function restorePost(index) {
+            const trash = JSON.parse(localStorage.getItem('trash')) || [];
+            const restoredPost = trash.splice(index, 1);
+            localStorage.setItem('trash', JSON.stringify(trash));
+            const publishedPosts = JSON.parse(localStorage.getItem('publishedPosts')) || [];
+            publishedPosts.push(restoredPost[0]);
+            localStorage.setItem('publishedPosts', JSON.stringify(publishedPosts));
+            renderPublishedPosts();
+            renderTrash();
+        }
+
+        // Change font color
+        function changeFontColor(color) {
+            document.execCommand('foreColor', false, color);
+        }
+
+        // Change font size
+        function changeFontSize(size) {
+            document.execCommand('fontSize', false, size);
+        }
+
+        // Initial render of drafts and published posts
+        renderDrafts();
+        renderPublishedPosts();
+        renderTrash();
+    </script>
+</body>
+
+</html>
