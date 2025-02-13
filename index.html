@@ -9,6 +9,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
+            transition: margin-left 0.3s; /* Smooth transition for the margin */
         }
 
         #header {
@@ -16,6 +17,7 @@
             display: flex;
             align-items: center; /* Vertically align items */
             padding: 10px;
+            background: #f0f0f0; /* Background color of the header */
         }
 
         #burger-menu {
@@ -90,6 +92,16 @@
         /* Search Results */
         #search-results {
             margin-top: 20px;
+        }
+
+        /* Toolbars */
+        .toolbar {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .toolbar button {
+            margin-right: 5px; /* Space between buttons */
         }
     </style>
 </head>
@@ -220,7 +232,6 @@
         burgerMenu.style.display = "block";
 
         function showContent(page) {
-            let contentDiv = document.getElementById('content');
             contentDiv.innerHTML = ''; // Clear existing content
             let pageContentId;
             switch (page) {
@@ -230,15 +241,33 @@
                     break;
                 case 'create-post':
                     pageContentId = 'create-post-content';
-                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Create Post</h2>
-                                             <div id="editor" contenteditable="true">Start writing your post here...</div>
-                                             <button onclick="savePost()">Save Post</button>
-                                             <p><b>Editor Tools:</b> Basic text formatting (Bold, Italic, Underline), Image Insertion, etc. will be implemented here.
-                                             <br> Due to length constraints in a single file, only a basic text area is shown. Full word processor functionalities require backend integration.</p></div>`;
+                    contentDiv.innerHTML = `
+                    <div id="${pageContentId}">
+                        <h2>Create Post</h2>
+                        <div class="toolbar">
+                            <button onclick="document.execCommand('bold');">Bold</button>
+                            <button onclick="document.execCommand('italic');">Italic</button>
+                            <button onclick="document.execCommand('underline');">Underline</button>
+                            <button onclick="document.execCommand('insertOrderedList');">Numbered List</button>
+                            <button onclick="document.execCommand('insertUnorderedList');">Bulleted List</button>
+                            <select onchange="document.execCommand('foreColor', false, this.value);">
+                                <option value="">Select Color</option>
+                                <option value="blue">Blue</option>
+                                <option value="red">Red</option>
+                                <option value="green">Green</option>
+                                <option value="orange">Orange</option>
+                            </select>
+                            <button onclick="document.execCommand('insertImage', false, prompt('Enter image URL:'))">Insert Image</button>
+                        </div>
+                        <div id="editor" contenteditable="true" style="border: 1px solid #ccc; padding: 10px; min-height: 300px;">
+                            Start writing your post here...
+                        </div>
+                        <button onclick="savePost()">Save Post</button>
+                    </div>`;
                     break;
                 case 'my-posts':
                     pageContentId = 'my-posts-content';
-                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>My Posts</h2><p class="empty-content">My Posts Is Empty, Please create one to fill in.</p></div>`;
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>My Posts</h2><p class="empty-content">My posts are currently empty. Please create one to fill in.</p></div>`;
                     break;
                 case 'all-posts':
                     pageContentId = 'all-posts-content';
@@ -262,7 +291,8 @@
                     break;
                 case 'edit-post':
                     pageContentId = 'edit-post-content';
-                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Edit Post</h2><p>Select a post to edit.</p></div>`;
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Edit Post</h2>
+                                             <p>Select a post to edit. Editing tools similar to 'Create Post' will be available here.</p></div>`;
                     break;
                 case 'manage-content':
                     pageContentId = 'manage-content-content';
@@ -274,27 +304,46 @@
                     break;
                 case 'appearance':
                     pageContentId = 'appearance-content';
-                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Appearance</h2><p>Customize the appearance of your website.</p></div>`;
+                    contentDiv.innerHTML = `<div id="${pageContentId}">
+                        <h2>Appearance</h2>
+                        <p>Select themes, customize colors, and upload images for your layout.</p>
+                    </div>`;
                     break;
                 case 'analytics':
                     pageContentId = 'analytics-content';
-                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Analytics</h2><p>View website analytics and performance.</p></div>`;
+                    contentDiv.innerHTML = `<div id="${pageContentId}">
+                        <h2>Analytics</h2>
+                        <p>View user metrics and traffic sources.</p>
+                    </div>`;
                     break;
                 case 'community':
                     pageContentId = 'community-content';
-                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Community</h2><p>Manage community settings and interactions.</p></div>`;
+                    contentDiv.innerHTML = `<div id="${pageContentId}">
+                        <h2>Community</h2>
+                        <p>Engage with your community in discussion forums and events.</p>
+                    </div>`;
                     break;
                 case 'help-support':
                     pageContentId = 'help-support-content';
-                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Help & Support</h2><p>Find help and support resources.</p></div>`;
+                    contentDiv.innerHTML = `<div id="${pageContentId}">
+                        <h2>Help & Support</h2>
+                        <p>Find resources for troubleshooting and guides.</p>
+                    </div>`;
                     break;
                 case 'logout':
                     pageContentId = 'logout-content';
-                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Logout</h2><p>Log out of your account.</p></div>`;
+                    contentDiv.innerHTML = `<div id="${pageContentId}">
+                        <h2>Logout</h2>
+                        <p>You have logged out successfully.</p>
+                    </div>`;
                     break;
                 default:
                     contentDiv.innerHTML = `<h2>Error</h2><p>Page not found.</p>`;
             }
+
+            // Set content full screen and hide the menu
+            contentDiv.style.marginLeft = "0"; // Adjust the margin to make full-width
+            menu.style.display = "none"; // Hide the menu
         }
 
         function savePost() {
