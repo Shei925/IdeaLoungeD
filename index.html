@@ -1,397 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Welcome to IdeaLoungeD! A place for creativity and ideas.">
-    <title>Welcome to IdeaLoungeD!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <title>IdeaLoungeD</title>
     <style>
+        /* Basic CSS (you can expand this) */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #f5f1e6; /* Creamy Beige */
         }
 
-        header {
-            background-color: rgba(75, 58, 47, 0.9); /* Darker Brown */
-            color: #ffffff;
+        #header {
+            position: relative; /* For positioning search relative to the header */
+            display: flex;
+            align-items: center; /* Vertically align items */
             padding: 10px;
-            text-align: center;
         }
 
-        h1 {
-            font-family: 'Dancing Script', cursive; /* Apply the new font */
-            font-size: 2.5em; /* Adjust size as needed */
-            margin: 0; /* Remove default margin */
+        #burger-menu {
+            z-index: 1000;
+            cursor: pointer;
+            font-size: 1.5em; /* Make the icon a bit larger */
+            margin-right: 10px; /* Add some spacing */
         }
 
-        .burger-menu {
+        #search-button {
+            cursor: pointer;
+            font-size: 1.5em; /* Make the icon a bit larger */
+        }
+
+        #search-input {
             display: none;
-            position: fixed;
+            margin-left: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #menu {
+            display: none;
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100vh;
-            background-color: rgba(75, 58, 47, 0.95); /* Darker Brown with transparency */
-            color: white;
-            padding: 20px;
-            overflow-y: auto;
-            z-index: 10;
+            width: 200px;
+            background-color: #f0f0f0;
+            padding-top: 40px;
+            z-index: 999;
         }
 
-        .burger-menu.visible {
+        #menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #menu li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #menu a {
+            text-decoration: none;
+            color: #333;
             display: block;
         }
 
-        #main-content {
-            padding: 20px;
-            position: relative;
-            background-color: #ffffff; /* White for content area */
+        #menu a:hover {
+            background-color: #ddd;
         }
 
         .content {
             padding: 20px;
-            position: relative;
-            width: 80%;
-            float: right;
+            margin-left: 200px; /* Adjust based on menu width */
         }
 
-        .menu-item {
-            padding: 5px 0;
-            cursor: pointer;
+        /* Style for empty content */
+        .empty-content {
+            font-style: italic;
+            color: #777;
         }
 
-        .menu-item:hover {
-            text-decoration: underline;
-            color: #d4b993; /* Soft Dusty Gold */
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: rgba(75, 58, 47, 0.9); /* Darker Brown with transparency */
-            color: #fff;
-            clear: both;
-        }
-
-        .editor {
-            border: 1px solid #d4b993; /* Dusty Gold for borders */
-            padding: 10px;
-            height: 400px;
-            overflow-y: auto;
-            background-color: #fdf6e3; /* Soft Beige */
-        }
-
-        .create-icon {
-            font-size: 24px;
-            cursor: pointer;
-            color: #4B3C31; /* Dark Coffee Color */
-        }
-
-        .toolbar {
-            margin-bottom: 10px;
-        }
-
-        .toolbar button {
-            margin-right: 5px;
-        }
-
-        .comment {
-            margin: 10px 0;
-            padding: 10px;
+        /* Editor Styles */
+        #editor {
             border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            padding: 10px;
+            min-height: 300px;
         }
 
-        .reaction-buttons {
-            margin-top: 10px;
-        }
-
-        .reaction-buttons button {
-            margin-right: 5px;
+        /* Search Results */
+        #search-results {
+            margin-top: 20px;
         }
     </style>
 </head>
-
 <body>
-    <header>
-        <h1>Welcome to IdeaLoungeD!</h1>
-        <button id="toggle-menu">☰</button>
-    </header>
 
-    <div class="burger-menu" id="burger-menu">
-        <div id="menu-content">
-            <h2>Menu</h2>
-            <div class="menu-item" id="home-button">Home</div>
-            <div class="menu-item" id="create-post-button">📝 Create Post</div>
-            <div class="menu-item" id="my-posts-button">My Posts</div>
-            <div class="menu-item" id="all-posts-button">All Posts</div>
-            <div class="menu-item" id="drafts-button">Drafts</div>
-            <div class="menu-item" id="scheduled-posts-button">Scheduled Posts</div>
-            <div class="menu-item" id="published-posts-button">Published Posts</div>
-            <div class="menu-item" id="trash-button">Trash</div>
-            <div class="menu-item" id="edit-post-button">Edit Post</div>
-            <div class="menu-item" id="manage-content-button">Manage Content</div>
-            <div class="menu-item" id="account-management-button">Account Management</div>
-            <div class="menu-item" id="appearance-button">Appearance</div>
-            <div class="menu-item" id="analytics-button">Analytics</div>
-            <div class="menu-item" id="community-button">Community</div>
-            <div class="menu-item" id="help-support-button">Help & Support</div>
-            <div class="menu-item" id="logout-button">Logout</div>
-        </div>
+    <div id="header">
+        <div id="burger-menu">☰</div>
+        <div id="search-button">🔍</div>
+        <input type="text" id="search-input" placeholder="Search...">
     </div>
 
-    <div id="main-content">
-        <div class="content" id="home" style="display:block;">
-            <h2>Welcome to the Home Page!</h2>
-            <h3>Published Posts:</h3>
-            <div id="published-posts-list"></div>
-        </div>
-        <div class="content" id="create-new-post" class="hide" style="display:none;">
-            <h2>Create New Post</h2>
-            <div class="toolbar">
-                <button onclick="document.execCommand('bold');">Bold</button>
-                <button onclick="document.execCommand('italic');">Italic</button>
-                <button onclick="document.execCommand('underline');">Underline</button>
-                <button onclick="document.execCommand('insertOrderedList');">Numbered List</button>
-                <button onclick="document.execCommand('insertUnorderedList');">Bullet List</button>
-                <button onclick="document.execCommand('justifyLeft');">Left Align</button>
-                <button onclick="document.execCommand('justifyCenter');">Center Align</button>
-                <button onclick="document.execCommand('justifyRight');">Right Align</button>
-                <button onclick="document.execCommand('justifyFull');">Justify</button>
-                <input type="color" id="fontColor" onchange="changeFontColor(this.value);" value="#000000">
-                <select id="fontSize" onchange="changeFontSize(this.value);">
-                    <option value="1">Small</option>
-                    <option value="3">Normal</option>
-                    <option value="5">Large</option>
-                    <option value="7">Extra Large</option>
-                </select>
-            </div>
-            <div class="editor" contenteditable="true" id="post-editor" placeholder="Start writing your post..."></div>
-            <button id="save-draft-button">Save Draft</button>
-            <button id="publish-post-button">Publish Post</button>
-            <h3>Saved Drafts:</h3>
-            <div id="drafts" class="post-list"></div>
-        </div>
-        <div class="content" id="my-posts" style="display:none;">
-            <h2>My Posts</h2>
-            <div id="my-posts-list"></div>
-        </div>
-        <div class="content" id="all-posts" style="display:none;">
-            <h2>All Posts</h2>
-            <div id="all-posts-list"></div>
-        </div>
-        <div class="content" id="drafts-section" style="display:none;">
-            <h2>Drafts</h2>
-            <div id="drafts-list"></div>
-        </div>
-        <div class="content" id="trash" style="display:none;">
-            <h2>Trash</h2>
-            <div id="trash-list"></div>
-        </div>
+    <nav id="menu">
+        <ul>
+            <li><a href="#home" onclick="showContent('home')">Home</a></li>
+            <li><a href="#create-post" onclick="showContent('create-post')">📝 Create Post</a></li>
+            <li><a href="#my-posts" onclick="showContent('my-posts')">My Posts</a></li>
+            <li><a href="#all-posts" onclick="showContent('all-posts')">All Posts</a></li>
+            <li><a href="#drafts" onclick="showContent('drafts')">Drafts</a></li>
+            <li><a href="#scheduled-posts" onclick="showContent('scheduled-posts')">Scheduled Posts</a></li>
+            <li><a href="#published-posts" onclick="showContent('published-posts')">Published Posts</a></li>
+            <li><a href="#trash" onclick="showContent('trash')">Trash</a></li>
+            <li><a href="#edit-post" onclick="showContent('edit-post')">Edit Post</a></li>
+            <li><a href="#manage-content" onclick="showContent('manage-content')">Manage Content</a></li>
+            <li><a href="#account-management" onclick="showContent('account-management')">Account Management</a></li>
+            <li><a href="#appearance" onclick="showContent('appearance')">Appearance</a></li>
+            <li><a href="#analytics" onclick="showContent('analytics')">Analytics</a></li>
+            <li><a href="#community" onclick="showContent('community')">Community</a></li>
+            <li><a href="#help-support" onclick="showContent('help-support')">Help & Support</a></li>
+            <li><a href="#logout" onclick="showContent('logout')">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="content" id="content">
+        <!-- Content will be dynamically loaded here -->
     </div>
 
-    <footer>
-        <p><a href="#about-us" style="color:#d4b993;">About Us</a> | <a href="#mission" style="color:#d4b993;">Mission</a> | <a href="#privacy-policy" style="color:#d4b993;">Privacy Policy</a></p>
-        <p>&copy; 2023 IdeaLoungeD. All Rights Reserved.</p>
-    </footer>
+    <div id="search-results">
+        <!-- Search results will be displayed here -->
+    </div>
 
     <script>
-        const toggleMenuButton = document.getElementById('toggle-menu');
         const burgerMenu = document.getElementById('burger-menu');
-        const createNewPostIcon = document.getElementById('create-new-post-icon');
-        const homeButton = document.getElementById('home-button');
-        const createPostButton = document.getElementById('create-post-button');
-        const saveDraftButton = document.getElementById('save-draft-button');
-        const publishPostButton = document.getElementById('publish-post-button');
-        const myPostsButton = document.getElementById('my-posts-button');
-        const allPostsButton = document.getElementById('all-posts-button');
-        const draftsButton = document.getElementById('drafts-button');
-        const trashButton = document.getElementById('trash-button');
+        const menu = document.getElementById('menu');
+        const searchButton = document.getElementById('search-button');
+        const searchInput = document.getElementById('search-input');
+        const contentDiv = document.getElementById('content');
+        const searchResultsDiv = document.getElementById('search-results');
 
-        // Toggle burger menu visibility
-        toggleMenuButton.addEventListener('click', () => {
-            burgerMenu.classList.toggle('visible');
-            if (burgerMenu.classList.contains('visible')) {
-                showHomeSection(); // Show home when menu opens
+        burgerMenu.addEventListener('click', () => {
+            menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+        });
+
+        searchButton.addEventListener('click', () => {
+            searchInput.style.display = (searchInput.style.display === "none" || searchInput.style.display === "") ? "inline-block" : "none";
+            searchInput.focus(); // Focus on the input field when it appears
+            if (searchInput.style.display === "inline-block") {
+              searchInput.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                  performSearch();
+                }
+              });
             }
         });
 
-        // Show home section
-        function showHomeSection() {
-            document.querySelectorAll('.content').forEach(section => section.style.display = 'none');
-            document.getElementById('home').style.display = 'block';
-            renderPublishedPosts(); // Render published posts on home
-        }
+        function performSearch() {
+          const searchTerm = searchInput.value.toLowerCase();
+          searchResultsDiv.innerHTML = ''; // Clear previous results
 
-        // Show create post section
-        createNewPostIcon.addEventListener('click', () => {
-            burgerMenu.classList.remove('visible'); // Close menu
-            showSection('create-new-post');
-        });
+          let allContent = '';
+          if (document.getElementById('home-content')) {
+            allContent += document.getElementById('home-content').textContent.toLowerCase();
+          }
 
-        createPostButton.addEventListener('click', () => {
-            burgerMenu.classList.remove('visible'); // Close menu
-            showSection('create-new-post');
-        });
+          if (document.getElementById('create-post-content')) {
+            allContent += document.getElementById('create-post-content').textContent.toLowerCase();
+          }
 
-        // Show my posts section
-        myPostsButton.addEventListener('click', () => {
-            burgerMenu.classList.remove('visible'); // Close menu
-            showSection('my-posts');
-            renderMyPosts(); // Render my posts
-        });
-
-        // Show all posts section
-        allPostsButton.addEventListener('click', () => {
-            burgerMenu.classList.remove('visible'); // Close menu
-            showSection('all-posts');
-            renderAllPosts(); // Render all posts
-        });
-
-        // Show drafts section
-        draftsButton.addEventListener('click', () => {
-            burgerMenu.classList.remove('visible'); // Close menu
-            showSection('drafts-section');
-            renderDrafts(); // Render drafts
-        });
-
-        // Show trash section
-        trashButton.addEventListener('click', () => {
-            burgerMenu.classList.remove('visible'); // Close menu
-            showSection('trash');
-            renderTrash(); // Render trash
-        });
-
-        // Show a specific content section
-        function showSection(sectionId) {
-            document.querySelectorAll('.content').forEach(section => section.style.display = 'none');
-            document.getElementById(sectionId).style.display = 'block';
-        }
-
-        // Save draft functionality
-        saveDraftButton.addEventListener('click', () => {
-            const postContent = document.getElementById('post-editor').innerHTML;
-            if (postContent) {
-                const drafts = JSON.parse(localStorage.getItem('drafts')) || [];
-                drafts.push(postContent);
-                localStorage.setItem('drafts', JSON.stringify(drafts));
-                renderDrafts();
-                document.getElementById('post-editor').innerHTML = ''; // Clear editor
-            }
-        });
-
-        // Publish post functionality
-        publishPostButton.addEventListener('click', () => {
-            const postContent = document.getElementById('post-editor').innerHTML;
-            if (postContent) {
-                const publishedPosts = JSON.parse(localStorage.getItem('publishedPosts')) || [];
-                publishedPosts.push(postContent);
-                localStorage.setItem('publishedPosts', JSON.stringify(publishedPosts));
-                renderPublishedPosts();
-                document.getElementById('post-editor').innerHTML = ''; // Clear editor
-                showSection('published-posts');
-            }
-        });
-
-        // Render saved drafts
-        function renderDrafts() {
-            const drafts = JSON.parse(localStorage.getItem('drafts')) || [];
-            const draftsList = document.getElementById('drafts');
-            draftsList.innerHTML = '';
-            drafts.forEach((draft, index) => {
-                const draftDiv = document.createElement('div');
-                draftDiv.className = 'comment';
-                draftDiv.innerHTML = `Draft ${index + 1}: ${draft} <button onclick="deleteDraft(${index})">Delete</button>`;
-                draftsList.appendChild(draftDiv);
-            });
-        }
-
-        // Delete draft functionality
-        function deleteDraft(index) {
-            const drafts = JSON.parse(localStorage.getItem('drafts')) || [];
-            drafts.splice(index, 1);
-            localStorage.setItem('drafts', JSON.stringify(drafts));
-            renderDrafts();
-        }
-
-        // Render published posts
-        function renderPublishedPosts() {
-            const publishedPosts = JSON.parse(localStorage.getItem('publishedPosts')) || [];
-            const publishedPostsList = document.getElementById('published-posts-list');
-            publishedPostsList.innerHTML = '';
-            publishedPosts.forEach((post, index) => {
-                const postDiv = document.createElement('div');
-                postDiv.className = 'comment';
-                postDiv.innerHTML = `Post ${index + 1}: ${post} <div class="reaction-buttons"><button onclick="reactToPost(${index}, 'like')">👍</button><button onclick="reactToPost(${index}, 'love')">❤️</button><button onclick="reactToPost(${index}, 'laugh')">😂</button><button onclick="reactToPost(${index}, 'sad')">😢</button><button onclick="reactToPost(${index}, 'angry')">😡</button></div><div class="comment-section"><input type="text" placeholder="Add a comment..." id="comment-input-${index}"><button onclick="addComment(${index})">Comment</button><div id="comments-${index}"></div></div>`;
-                publishedPostsList.appendChild(postDiv);
-            });
-        }
-
-        // React to post functionality
-        function reactToPost(postIndex, reaction) {
-            alert(`You reacted with: ${reaction}`);
-            // Here you can implement further functionality for reactions
-        }
-
-        // Add comment functionality
-        function addComment(postIndex) {
-            const commentInput = document.getElementById(`comment-input-${postIndex}`);
-            const commentText = commentInput.value;
-            if (commentText) {
-                const commentsDiv = document.getElementById(`comments-${postIndex}`);
-                const commentDiv = document.createElement('div');
-                commentDiv.className = 'comment';
-                commentDiv.innerHTML = commentText;
-                commentsDiv.appendChild(commentDiv);
-                commentInput.value = ''; // Clear input
+          if (document.getElementById('my-posts-content')) {
+            allContent += document.getElementById('my-posts-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('all-posts-content')) {
+            allContent += document.getElementById('all-posts-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('drafts-content')) {
+            allContent += document.getElementById('drafts-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('scheduled-posts-content')) {
+            allContent += document.getElementById('scheduled-posts-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('published-posts-content')) {
+            allContent += document.getElementById('published-posts-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('trash-content')) {
+            allContent += document.getElementById('trash-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('edit-post-content')) {
+            allContent += document.getElementById('edit-post-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('manage-content-content')) {
+            allContent += document.getElementById('manage-content-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('account-management-content')) {
+            allContent += document.getElementById('account-management-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('appearance-content')) {
+            allContent += document.getElementById('appearance-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('analytics-content')) {
+            allContent += document.getElementById('analytics-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('community-content')) {
+            allContent += document.getElementById('community-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('help-support-content')) {
+            allContent += document.getElementById('help-support-content').textContent.toLowerCase();
+          }
+          if (document.getElementById('logout-content')) {
+            allContent += document.getElementById('logout-content').textContent.toLowerCase();
+          }
+            if (allContent.includes(searchTerm)) {
+                searchResultsDiv.innerHTML = `<p>Search results for "${searchInput.value}": Found!</p>`;
+            } else {
+                searchResultsDiv.innerHTML = `<p>No results found for "${searchInput.value}".</p>`;
             }
         }
 
-        // Render trash
-        function renderTrash() {
-            const trash = JSON.parse(localStorage.getItem('trash')) || [];
-            const trashList = document.getElementById('trash-list');
-            trashList.innerHTML = '';
-            trash.forEach((item, index) => {
-                const trashDiv = document.createElement('div');
-                trashDiv.className = 'comment';
-                trashDiv.innerHTML = `Deleted Post ${index + 1}: ${item} <button onclick="restorePost(${index})">Restore</button>`;
-                trashList.appendChild(trashDiv);
-            });
+        // Keep burger menu visible after clicking
+        burgerMenu.style.display = "block";
+
+        function showContent(page) {
+            let contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = ''; // Clear existing content
+            let pageContentId;
+            switch (page) {
+                case 'home':
+                    pageContentId = 'home-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Home</h2><p>Featured published posts will be displayed here.</p></div>`;
+                    break;
+                case 'create-post':
+                    pageContentId = 'create-post-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Create Post</h2>
+                                             <div id="editor" contenteditable="true">Start writing your post here...</div>
+                                             <button onclick="savePost()">Save Post</button>
+                                             <p><b>Editor Tools:</b> Basic text formatting (Bold, Italic, Underline), Image Insertion, etc. will be implemented here.
+                                             <br> Due to length constraints in a single file, only a basic text area is shown. Full word processor functionalities require backend integration.</p></div>`;
+                    break;
+                case 'my-posts':
+                    pageContentId = 'my-posts-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>My Posts</h2><p class="empty-content">My Posts Is Empty, Please create one to fill in.</p></div>`;
+                    break;
+                case 'all-posts':
+                    pageContentId = 'all-posts-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>All Posts</h2><p class="empty-content">No posts available.</p></div>`;
+                    break;
+                case 'drafts':
+                    pageContentId = 'drafts-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Drafts</h2><p class="empty-content">No drafts available.</p></div>`;
+                    break;
+                case 'scheduled-posts':
+                    pageContentId = 'scheduled-posts-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Scheduled Posts</h2><p class="empty-content">No scheduled posts.</p></div>`;
+                    break;
+                case 'published-posts':
+                    pageContentId = 'published-posts-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Published Posts</h2><p class="empty-content">No published posts available.</p></div>`;
+                    break;
+                case 'trash':
+                    pageContentId = 'trash-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Trash</h2><p class="empty-content">Trash is empty.</p></div>`;
+                    break;
+                case 'edit-post':
+                    pageContentId = 'edit-post-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Edit Post</h2><p>Select a post to edit.</p></div>`;
+                    break;
+                case 'manage-content':
+                    pageContentId = 'manage-content-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Manage Content</h2><p>Manage your content settings here.</p></div>`;
+                    break;
+                case 'account-management':
+                    pageContentId = 'account-management-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Account Management</h2><p>Manage your account settings here.</p></div>`;
+                    break;
+                case 'appearance':
+                    pageContentId = 'appearance-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Appearance</h2><p>Customize the appearance of your website.</p></div>`;
+                    break;
+                case 'analytics':
+                    pageContentId = 'analytics-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Analytics</h2><p>View website analytics and performance.</p></div>`;
+                    break;
+                case 'community':
+                    pageContentId = 'community-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Community</h2><p>Manage community settings and interactions.</p></div>`;
+                    break;
+                case 'help-support':
+                    pageContentId = 'help-support-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Help & Support</h2><p>Find help and support resources.</p></div>`;
+                    break;
+                case 'logout':
+                    pageContentId = 'logout-content';
+                    contentDiv.innerHTML = `<div id="${pageContentId}"><h2>Logout</h2><p>Log out of your account.</p></div>`;
+                    break;
+                default:
+                    contentDiv.innerHTML = `<h2>Error</h2><p>Page not found.</p>`;
+            }
         }
 
-        // Restore post functionality
-        function restorePost(index) {
-            const trash = JSON.parse(localStorage.getItem('trash')) || [];
-            const restoredPost = trash.splice(index, 1);
-            localStorage.setItem('trash', JSON.stringify(trash));
-            const publishedPosts = JSON.parse(localStorage.getItem('publishedPosts')) || [];
-            publishedPosts.push(restoredPost[0]);
-            localStorage.setItem('publishedPosts', JSON.stringify(publishedPosts));
-            renderPublishedPosts();
-            renderTrash();
+        function savePost() {
+            let editorContent = document.getElementById('editor').innerHTML;
+            alert("Post content: " + editorContent + "\n\n(Saving functionality would require backend integration)");
         }
-
-        // Change font color
-        function changeFontColor(color) {
-            document.execCommand('foreColor', false, color);
-        }
-
-        // Change font size
-        function changeFontSize(size) {
-            document.execCommand('fontSize', false, size);
-        }
-
-        // Initial render of drafts and published posts
-        renderDrafts();
-        renderPublishedPosts();
-        renderTrash();
     </script>
-</body>
 
+</body>
 </html>
