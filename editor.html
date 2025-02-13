@@ -1,8 +1,8 @@
-<!-- editor.html -->
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rich Text Editor</title>
     <style>
         #editor-area {
@@ -26,6 +26,11 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            background-color: #e0e0e0; /* Give a background color to the buttons */
+        }
+
+        .toolbar button:hover {
+            background-color: #d0d0d0; /* Change background on hover */
         }
 
         #editor {
@@ -57,191 +62,28 @@
             <button onclick="document.execCommand('insertImage', false, prompt('Enter image URL:'))">Insert Image</button>
             <button onclick="document.execCommand('createLink', false, prompt('Enter link:'))">Insert Link</button>
             <button onclick="document.execCommand('removeFormat');">Remove Format</button>
+            <button onclick="boldText();">Add Bold</button>
+            <button onclick="italicText();">Add Italic</button>
+            <button onclick="underlineText();">Add Underline</button>
         </div>
-        <div id="editor" contenteditable="true" style="border: 1px solid #ccc; padding: 10px; min-height: 300px;">
-            Here's a comprehensive list of components found in word processors like Microsoft Word, online editors for blogging, and platforms like Canva, focusing on features that enhance the writing and content creation process, including multimedia integration:
+        <div id="editor" contenteditable="true">
+            Here's a comprehensive list of components found in word processors like Microsoft Word, online editors for blogging, and platforms like Canva, focusing on features that enhance the writing and content creation process, including multimedia integration:<br><br>
 
-**I. Basic Text Editing & Formatting**
+            **I. Basic Text Editing & Formatting**<br><br>
 
-*   **Text Input Area:**
-    *   The main area where you type and edit your text.
+            * **Text Input Area:** The main area where you type and edit your text.<br>
+            * **Font Selection:** Choosing different fonts (e.g., Arial, Times New Roman, Helvetica, custom fonts).<br>
+            * **Font Styles:** Bold, Italics, Underline, Strikethrough, Superscript, Subscript.<br>
+            * **Font Color:** Changing the color of the text.<br>
+            * **Highlighting:** Adding a background color to text for emphasis.<br><br>
 
-*   **Font Selection:**
-    *   **Font Type:**  Choosing different fonts (e.g., Arial, Times New Roman, Helvetica, custom fonts).
-    *   **Font Size:** Adjusting the size of the text.
-    *   **Font Styles:**  Bold, Italics, Underline, Strikethrough, Superscript, Subscript.
-    *   **Font Color:** Changing the color of the text.
-    *   **Highlighting:**  Adding a background color to text for emphasis.
+            **II. Advanced Writing & Editing Tools**<br><br>
 
-*   **Paragraph Formatting:**
-    *   **Alignment:** Left, Center, Right, Justified.
-    *   **Line Spacing:**  Adjusting the space between lines.
-    *   **Paragraph Spacing:** Adjusting the space before and after paragraphs.
-    *   **Indentation:**  Indenting the first line or the entire paragraph.
-    *   **Bullets and Numbering:** Creating lists.
+            * **Spell Check & Grammar Check:** Identifying and correcting spelling and grammatical errors.<br>
+            * **Thesaurus:** Suggesting synonyms and antonyms.<br>
+            * **Word Count:** Displaying the number of words, characters, paragraphs, and lines in the document.<br><br>
 
-*   **Styles:**
-    *   Predefined formatting sets (e.g., Heading 1, Heading 2, Normal) for consistent styling.  Can be customized and saved.
-
-*   **Find and Replace:**
-    *   Locating specific words or phrases and replacing them with others.
-    *   Advanced options:  Case-sensitive search, whole word search, using wildcards.
-
-*   **Undo/Redo:**
-    *   Reversing or reapplying actions.
-
-*   **Cut, Copy, Paste:**
-    *   Moving and duplicating text.
-    *   Paste Special: Pasting with or without formatting.
-
-*   **Text Wrapping:**
-    *   Controlling how text flows around images and other objects.
-
-**II. Advanced Writing & Editing Tools**
-
-*   **Spell Check & Grammar Check:**
-    *   Identifying and correcting spelling and grammatical errors.
-    *   Often includes suggestions for better word choice.
-    *   Custom dictionaries:  Adding words to the spell checker.
-
-*   **Thesaurus:**
-    *   Suggesting synonyms and antonyms.
-
-*   **Word Count:**
-    *   Displaying the number of words, characters, paragraphs, and lines in the document.
-
-*   **Readability Statistics:**
-    *   Analyzing the complexity of the text using metrics like Flesch Reading Ease and Flesch-Kincaid Grade Level.
-
-*   **Track Changes:**
-    *   Recording all edits made to a document, allowing reviewers to see and accept/reject changes.
-
-*   **Comments:**
-    *   Adding notes and feedback directly in the document.
-
-*   **Citations & Bibliography:**
-    *   Managing sources and generating citations and bibliographies in various styles (e.g., APA, MLA, Chicago).
-    *   Integration with citation management tools (e.g., Zotero, Mendeley).
-
-*   **Outline View:**
-    *   Structuring the document using headings and subheadings.
-
-*   **Table of Contents Generation:**
-    *   Automatically creating a table of contents based on headings.
-
-*   **Index Generation:**
-    *   Creating an index of keywords and their page numbers.
-
-*   **Cross-referencing:**
-    *   Linking to other parts of the document.
-
-*   **Equation Editor:**
-    *   Creating and formatting mathematical equations (e.g., using LaTeX).
-
-    *   \[ \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \]
-
-*   **Mail Merge:**
-    *   Creating personalized documents (e.g., letters, emails) by merging data from a spreadsheet or database.
-
-**III. Multimedia Integration**
-
-*   **Image Insertion:**
-    *   Adding images from files or online sources.
-    *   Image resizing, cropping, and positioning.
-    *   Image styles and effects (e.g., borders, shadows).
-    *   Alt text:  Adding descriptions for accessibility and SEO.
-
-*   **Video Insertion:**
-    *   Embedding videos from files or online platforms (e.g., YouTube, Vimeo).
-    *   Video controls (e.g., play, pause, volume).
-
-*   **Audio Insertion:**
-    *   Adding audio files.
-    *   Recording audio directly within the editor (some platforms).
-
-*   **GIF Insertion:**
-    *   Adding animated GIFs.
-
-*   **Shapes & Drawings:**
-    *   Inserting shapes (e.g., rectangles, circles, arrows).
-    *   Drawing freehand.
-    *   Customizing shapes with colors, gradients, and effects.
-
-*   **Charts & Graphs:**
-    *   Creating charts and graphs from data.
-    *   Different chart types (e.g., bar charts, line charts, pie charts).
-
-*   **Tables:**
-    *   Creating tables to organize data.
-    *   Table formatting options (e.g., borders, shading).
-
-*   **SmartArt Graphics:**
-    *   Pre-designed diagrams and graphics for illustrating concepts.
-
-**IV. Collaboration & Sharing**
-
-*   **Real-time Collaboration:**
-    *   Multiple users editing the same document simultaneously.
-    *   Version history:  Tracking changes and reverting to previous versions.
-
-*   **Sharing Options:**
-    *   Sharing documents via email, link, or social media.
-    *   Setting permissions (e.g., view-only, edit access).
-
-*   **Commenting & Feedback:**
-    *   Adding comments and replying to comments.
-    *   Resolving comments.
-
-*   **Version Control:**
-    *   Maintaining a history of document versions.
-
-**V. Publishing & Exporting**
-
-*   **File Formats:**
-    *   Saving and exporting documents in various formats (e.g., DOCX, PDF, TXT, HTML, EPUB).
-
-*   **PDF Export Options:**
-    *   Creating PDFs with different settings (e.g., optimized for web, print).
-
-*   **Blog Publishing Integration:**
-    *   Directly publishing content to blogging platforms (e.g., WordPress, Medium).
-
-*   **HTML Export:**
-    *   Exporting the document as HTML for web pages.
-
-**VI. Platform-Specific Features (Examples)**
-
-*   **Microsoft Word/Office:**
-    *   Templates:  Pre-designed document layouts.
-    *   Macros:  Automating repetitive tasks.
-    *   PowerPoint integration: Easily import Word documents into PowerPoint presentations.
-    *   Accessibility Checker:  Ensuring documents are accessible to people with disabilities.
-
-*   **Online Blogging Platforms (WordPress, Medium, etc.):**
-    *   SEO Optimization Tools:  Helping to improve search engine rankings.
-    *   Social Sharing Buttons:  Easily sharing content on social media.
-    *   Analytics:  Tracking website traffic and user engagement.
-    *   Plugin/Extension Support:  Adding extra functionality.
-
-*   **Canva:**
-    *   Drag-and-Drop Interface: Easy to use design tools.
-    *   Templates:  Thousands of pre-designed templates for various purposes.
-    *   Stock Photos & Graphics:  Access to a library of royalty-free images and graphics.
-    *   Animation Tools:  Creating animated graphics and videos.
-    *   Brand Kit:  Storing brand colors, logos, and fonts for consistent branding.
-
-**VII. Features That Make Writing Fun**
-
-*   **Distraction-Free Mode:** Hides all unnecessary interface elements to focus on writing.
-*   **Dark Mode:** Reduces eye strain.
-*   **Sound Effects:**  Optional sound effects for typing and other actions.
-*   **Themes/Customization:**  Personalizing the look and feel of the editor.
-*   **Writing Prompts:**  Providing inspiration and ideas.
-*   **Gamification:**  Earning badges or rewards for writing achievements.
-*   **Collaboration Features:** Writing with friends or colleagues can be more engaging.
-*   **Multimedia Integration:** Adding images, videos, and audio can make the writing process more creative and enjoyable.
-
-This list should provide a very comprehensive overview of the components and features you'll find in word processors, blogging platforms, and design tools like Canva, and how they can contribute to a more enjoyable and effective content creation experience.
+            (And additional information can be added here...)
         </div>
         <button onclick="publishPost()">Publish Post</button>
     </div>
@@ -249,8 +91,22 @@ This list should provide a very comprehensive overview of the components and fea
     <script>
         function publishPost() {
             var text = document.getElementById("editor").innerHTML;
-            alert(text);
+            alert("Post content published:\n\n" + text);
+            // You can add functionality here to save the post or send it to a server
+        }
+
+        function boldText() {
+            document.execCommand('bold', false, null);
+        }
+
+        function italicText() {
+            document.execCommand('italic', false, null);
+        }
+
+        function underlineText() {
+            document.execCommand('underline', false, null);
         }
     </script>
+
 </body>
 </html>
