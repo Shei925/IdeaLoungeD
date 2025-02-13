@@ -20,15 +20,13 @@
             align-items: center; 
             padding: 10px;
             background: #f0f0f0;
+            position: relative; /* Position relative for proper layering */
         }
 
         #burger-menu {
             cursor: pointer;
             font-size: 1.5em; 
             margin-right: 10px; 
-            position: absolute; /* Positioning the toggle in the top left */
-            top: 10px;
-            left: 10px;
             z-index: 1000; /* Ensure it's on top */
         }
 
@@ -38,7 +36,7 @@
         }
 
         #search-input {
-            display: none;
+            display: inline-block; /* Ensuring it shows inline properly */
             margin-left: 10px;
             padding: 5px;
             border: 1px solid #ccc;
@@ -94,6 +92,10 @@
             width: 100%;
         }
 
+        #footer .footer-text {
+            margin-top: 10px; /* Add some spacing */
+        }
+
         #published-posts {
             margin-top: 20px;
         }
@@ -144,7 +146,7 @@
     <div id="footer">
         <button onclick="aboutUs()">About Us</button>
         <button onclick="mission()">Mission</button>
-        &copy; 2024 IdeaLoungeD. All Rights Reserved.
+        <div class="footer-text">&copy; 2024 IdeaLoungeD. All Rights Reserved.</div>
     </div>
 
     <script>
@@ -241,6 +243,7 @@
                 <h2 class="alex-brush-font">About Us</h2>
                 <p>IdeaLoungeD is a platform where you can share your ideas and engage with others.</p>
                 <p>Our mission is to foster creativity and collaboration in a supportive online environment.</p>
+                &copy; 2024 IdeaLoungeD. All Rights Reserved.
             `;
         }
 
@@ -249,6 +252,7 @@
                 <h2 class="alex-brush-font">Mission</h2>
                 <p>Our mission is to foster creativity and collaboration in a supportive online environment.</p>
                 <p>We believe everyone has unique ideas and perspectives to share, and we strive to create a supportive space for them.</p>
+                &copy; 2024 IdeaLoungeD. All Rights Reserved.
             `;
         }
     </script>
