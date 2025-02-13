@@ -17,6 +17,7 @@
         .toolbar {
             background-color: #f0f0f0;
             padding: 10px;
+            display: flex;  /* Use flexbox for horizontal layout */
             border-bottom: 1px solid #ccc;
         }
 
@@ -26,7 +27,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            background-color: #e0e0e0; /* Give a background color to the buttons */
+            background-color: #e0e0e0; /* Button background color */
         }
 
         .toolbar button:hover {
@@ -40,6 +41,53 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             word-wrap: break-word;
+            background-color: #fff; /* Background color for the editor */
+        }
+
+        .action-buttons {
+            display: flex;  /* Flexbox for action buttons */
+            margin-top: 10px;
+        }
+
+        .dropbtn {
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px;
+            margin-right: 10px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            min-width: 160px;
+        }
+
+        .dropdown-content button {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border: none;
+            width: 100%;
+            text-align: left;
+            background: none; /* Remove background */
+        }
+
+        .dropdown-content button:hover {
+            background-color: #f1f1f1;
+        }
+
+        .show {
+            display: block;
         }
     </style>
 </head>
@@ -59,54 +107,87 @@
                 <option value="green">Green</option>
                 <option value="orange">Orange</option>
             </select>
-            <button onclick="document.execCommand('insertImage', false, prompt('Enter image URL:'))">Insert Image</button>
-            <button onclick="document.execCommand('createLink', false, prompt('Enter link:'))">Insert Link</button>
-            <button onclick="document.execCommand('removeFormat');">Remove Format</button>
-            <button onclick="boldText();">Add Bold</button>
-            <button onclick="italicText();">Add Italic</button>
-            <button onclick="underlineText();">Add Underline</button>
+            <button onclick="insertImage();">Insert Image</button>
         </div>
         <div id="editor" contenteditable="true">
-            Here's a comprehensive list of components found in word processors like Microsoft Word, online editors for blogging, and platforms like Canva, focusing on features that enhance the writing and content creation process, including multimedia integration:<br><br>
-
-            **I. Basic Text Editing & Formatting**<br><br>
-
-            * **Text Input Area:** The main area where you type and edit your text.<br>
-            * **Font Selection:** Choosing different fonts (e.g., Arial, Times New Roman, Helvetica, custom fonts).<br>
-            * **Font Styles:** Bold, Italics, Underline, Strikethrough, Superscript, Subscript.<br>
-            * **Font Color:** Changing the color of the text.<br>
-            * **Highlighting:** Adding a background color to text for emphasis.<br><br>
-
-            **II. Advanced Writing & Editing Tools**<br><br>
-
-            * **Spell Check & Grammar Check:** Identifying and correcting spelling and grammatical errors.<br>
-            * **Thesaurus:** Suggesting synonyms and antonyms.<br>
-            * **Word Count:** Displaying the number of words, characters, paragraphs, and lines in the document.<br><br>
-
-            (And additional information can be added here...)
+            Here's a comprehensive list of components found in word processors like Microsoft Word...
         </div>
-        <button onclick="publishPost()">Publish Post</button>
+        
+        <div class="action-buttons">
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdown('publishDropdown')">💾 Save</button>
+                <div id="publishDropdown" class="dropdown-content">
+                    <button onclick="saveToDraft()">Save as Draft</button>
+                    <button onclick="saveToFile()">Save to Phone</button>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdown('publishOptions')">📤 Publish</button>
+                <div id="publishOptions" class="dropdown-content">
+                    <button onclick="publishPost('public')">Publish Publicly</button>
+                    <button onclick="publishPost('private')">Publish Privately</button>
+                    <button onclick="showSelectUserDialog()">Select Few</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        function publishPost() {
-            var text = document.getElementById("editor").innerHTML;
-            alert("Post content published:\n\n" + text);
-            // You can add functionality here to save the post or send it to a server
+        function toggleDropdown(id) {
+            document.getElementById(id).classList.toggle("show");
         }
 
-        function boldText() {
-            document.execCommand('bold', false, null);
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    dropdowns[i].classList.remove('show');
+                }
+            }
         }
 
-        function italicText() {
-            document.execCommand('italic', false, null);
+        function saveToDraft() {
+            const content = document.getElementById("editor").innerHTML;
+            localStorage.setItem("draftContent", content);
+            alert("Draft saved!");
         }
 
-        function underlineText() {
-            document.execCommand('underline', false, null);
+        function saveToFile() {
+            const content = document.getElementById("editor").innerHTML;
+            const blob = new Blob([content], { type: "text/html" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "post.html";
+            a.click();
+            URL.revokeObjectURL(url);
         }
+
+        function publishPost(type) {
+            const content = document.getElementById("editor").innerHTML;
+            if (type === 'public') {
+                alert("Post published publicly:\n\n" + content);
+            } else if (type === 'private') {
+                alert("Post published privately:\n\n" + content);
+            } else {
+                alert("Select few users to view.");
+                // Additional logic for selecting users could be added here
+            }
+            // Additional functionality for saving to a database, etc., can be added here
+        }
+
+        function insertImage() {
+            const imageURL = prompt("Enter image URL:");
+            document.execCommand('insertImage', false, imageURL);
+        }
+
+        function showSelectUserDialog() {
+            // Placeholder function for selecting specific users
+            const users = prompt("Enter usernames separated by commas:");
+            alert("These users can now see the post: " + users);
+        }
+
     </script>
-
 </body>
 </html>
