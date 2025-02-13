@@ -6,7 +6,7 @@
     <title>Rich Text Editor</title>
     <style>
         #editor-area {
-            width: 80%;
+            width: 85%;  /* Increased width for the editor */
             margin: 40px auto;
             padding: 10px;
             border: 1px solid #ccc;
@@ -17,13 +17,14 @@
         .toolbar {
             background-color: #f0f0f0;
             padding: 10px;
-            display: flex;  /* Use flexbox for horizontal layout */
+            display: flex;  /* Flexbox for horizontal layout */
             border-bottom: 1px solid #ccc;
+            flex-wrap: wrap; /* Allow wrapping of buttons if necessary */
         }
 
         .toolbar button, .toolbar select {
             margin: 5px;
-            padding: 10px 20px;
+            padding: 10px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -35,7 +36,7 @@
         }
 
         #editor {
-            padding: 10px;
+            padding: 15px;
             min-height: 300px;
             border: 1px solid #ccc;
             border-radius: 10px;
@@ -107,10 +108,16 @@
                 <option value="green">Green</option>
                 <option value="orange">Orange</option>
             </select>
-            <button onclick="insertImage();">Insert Image</button>
+            <button onclick="document.execCommand('justifyLeft');">Align Left</button>
+            <button onclick="document.execCommand('justifyCenter');">Align Center</button>
+            <button onclick="document.execCommand('justifyRight');">Align Right</button>
+            <button onclick="document.execCommand('justifyFull');">Justify</button>
+            <button onclick="document.execCommand('insertImage', false, prompt('Enter image URL:'));">Insert Image</button>
+            <button onclick="document.execCommand('createLink', false, prompt('Enter link:'));">Insert Link</button>
+            <button onclick="document.execCommand('removeFormat');">Clear Formatting</button>
         </div>
         <div id="editor" contenteditable="true">
-            Here's a comprehensive list of components found in word processors like Microsoft Word...
+            Write your thoughts here...
         </div>
         
         <div class="action-buttons">
@@ -177,17 +184,10 @@
             // Additional functionality for saving to a database, etc., can be added here
         }
 
-        function insertImage() {
-            const imageURL = prompt("Enter image URL:");
-            document.execCommand('insertImage', false, imageURL);
-        }
-
         function showSelectUserDialog() {
-            // Placeholder function for selecting specific users
             const users = prompt("Enter usernames separated by commas:");
             alert("These users can now see the post: " + users);
         }
-
     </script>
 </body>
 </html>
