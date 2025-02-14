@@ -36,6 +36,8 @@
             const content = localStorage.getItem("draftContent");
             if (content) {
                 alert("Post published as " + type + ":\n\n" + content);
+                // Here you can add logic to actually publish the post
+                localStorage.removeItem("draftContent"); // Clear draft after publishing
             } else {
                 alert("No content to publish.");
             }
