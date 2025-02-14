@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Few Users</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .user-list {
+            margin: 20px 0;
+        }
+        .user-list label {
+            display: block;
+            margin: 5px 0;
+        }
+        .action-buttons {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Select Users to View Post</h2>
+    <div class="user-list">
+        <label><input type="checkbox" value="user1"> User 1</label>
+        <label><input type="checkbox" value="user2"> User 2</label>
+        <label><input type="checkbox" value="user3"> User 3</label>
+        <label><input type="checkbox" value="user4"> User 4</label>
+        <label><input type="checkbox" value="user5"> User 5</label>
+    </div>
+    <div class="action-buttons">
+        <button onclick="selectUsers()">Confirm Selection</button>
+    </div>
+
+    <script>
+        function selectUsers() {
+            const selectedUsers = [];
+            const checkboxes = document.querySelectorAll('.user-list input[type="checkbox"]:checked');
+            checkboxes.forEach((checkbox) => {
+                selectedUsers.push(checkbox.value);
+            });
+            alert("Selected users: " + selectedUsers.join(", "));
+            // Here you can add logic to save the selected users to your post
+        }
+    </script>
+</body>
+</html>
