@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Save Your Post</h2>
+    <div>
+        <button onclick="saveAsDraft()">Save as Draft</button>
+        <button onclick="saveToFile()">Save to Phone</button>
+    </div>
+
+    <script>
+        function saveAsDraft() {
+            const content = localStorage.getItem("draftContent");
+            if (content) {
+                alert("Draft saved!");
+            } else {
+                alert("No content to save as draft.");
+            }
+        }
+
+        function saveToFile() {
+            const content = localStorage.getItem("draftContent");
+            if (content) {
+                const blob = new Blob([content], { type: "text/html" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "post.html";
+                a.click();
+                URL.revokeObjectURL(url);
+                alert("Post saved to phone!");
+            } else {
+                alert("No content to save.");
+            }
+        }
+    </script>
+</body>
+</html>
