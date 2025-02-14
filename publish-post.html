@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publish Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Publish Your Post</h2>
+    <div>
+        <button onclick="publishPost('public')">Publish Publicly</button>
+        <button onclick="publishPost('private')">Publish Privately</button>
+        <button onclick="window.location.href='select-few.html'">Select Few</button>
+    </div>
+
+    <script>
+        function publishPost(type) {
+            const content = localStorage.getItem("draftContent");
+            if (content) {
+                alert("Post published as " + type + ":\n\n" + content);
+            } else {
+                alert("No content to publish.");
+            }
+        }
+    </script>
+</body>
+</html>
