@@ -48,10 +48,19 @@
         <option value="Trebuchet MS">Trebuchet MS</option>
         <option value="Lucida Console">Lucida Console</option>
     </select>
+    <button onclick="selectFont()">Select</button>
 
     <script>
         function changeFont(font) {
-            document.execCommand('fontName', false, font);
+            localStorage.setItem("selectedFont", font);
+        }
+
+        function selectFont() {
+            const font = localStorage.getItem("selectedFont");
+            if (font) {
+                document.execCommand('fontName', false, font);
+                window.location.href = 'editor.html'; // Redirect back to editor
+            }
         }
     </script>
 </body>
