@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rich Text Editor</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure the body takes full height */
+        }
+
         #editor-area {
             width: 85%;  /* Increased width for the editor */
             margin: 40px auto;
@@ -12,6 +21,7 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            flex: 1; /* Allow the editor area to grow */
         }
 
         .toolbar {
@@ -90,6 +100,13 @@
         .show {
             display: block;
         }
+
+        footer {
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -122,8 +139,8 @@
         
         <div class="action-buttons">
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown('publishDropdown')">💾 Save</button>
-                <div id="publishDropdown" class="dropdown-content">
+                <button class="dropbtn" onclick="toggleDropdown('saveDropdown')">💾 Save</button>
+                <div id="saveDropdown" class="dropdown-content">
                     <button onclick="saveToDraft()">Save as Draft</button>
                     <button onclick="saveToFile()">Save to Phone</button>
                 </div>
@@ -134,13 +151,29 @@
                 <div id="publishOptions" class="dropdown-content">
                     <button onclick="publishPost('public')">Publish Publicly</button>
                     <button onclick="publishPost('private')">Publish Privately</button>
-                    <button onclick="showSelectUserDialog()">Select Few</button>
+                    <button onclick="window.location.href='select-few.html'">Select Few</button>
                 </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn" onclick="window.location.href='schedule-post.html'">Schedule Post</button>
             </div>
         </div>
     </div>
 
+    <footer>
+        <p>Footer Content Here</p>
+    </footer>
+
     <script>
+        // Load saved content from localStorage
+        window.onload = function() {
+            const draftContent = localStorage.getItem("draftContent");
+            if (draftContent) {
+                document.getElementById("editor").innerHTML = draftContent;
+            }
+        };
+
         function toggleDropdown(id) {
             document.getElementById(id).classList.toggle("show");
         }
@@ -184,7 +217,7 @@
             // Additional functionality for saving to a database, etc., can be added here
         }
 
-        function showSelectUserDialog() {
+        function showSelectUser Dialog() {
             const users = prompt("Enter usernames separated by commas:");
             alert("These users can now see the post: " + users);
         }
