@@ -34,6 +34,7 @@
         function saveAsDraft() {
             const content = localStorage.getItem("draftContent");
             if (content) {
+                localStorage.setItem("draftContent", content);
                 alert("Draft saved!");
             } else {
                 alert("No content to save as draft.");
