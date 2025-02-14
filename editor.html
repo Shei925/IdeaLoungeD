@@ -60,47 +60,6 @@
             margin-top: 10px;
         }
 
-        .dropbtn {
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            cursor: pointer;
-            padding: 10px;
-            margin-right: 10px;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            min-width: 160px;
-        }
-
-        .dropdown-content button {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            border: none;
-            width: 100%;
-            text-align: left;
-            background: none; /* Remove background */
-        }
-
-        .dropdown-content button:hover {
-            background-color: #f1f1f1;
-        }
-
-        .show {
-            display: block;
-        }
-
         footer {
             background-color: #f0f0f0;
             text-align: center;
@@ -134,17 +93,9 @@
         </div>
         
         <div class="action-buttons">
-            <div class="dropdown">
-                <button class="dropbtn" onclick="window.location.href='save-post.html'">💾 Save</button>
-            </div>
-
-            <div class="dropdown">
-                <button class="dropbtn" onclick="window.location.href='publish-post.html'">📤 Publish</button>
-            </div>
-
-            <div class="dropdown">
-                <button class="dropbtn" onclick="window.location.href='schedule-post.html'">Schedule Post</button>
-            </div>
+            <button onclick="saveToDraft()">💾 Save</button>
+            <button onclick="window.location.href='publish.html'">📤 Publish</button>
+            <button onclick="window.location.href='schedule.html'">Schedule Post</button>
         </div>
     </div>
 
@@ -158,6 +109,19 @@
             const draftContent = localStorage.getItem("draftContent");
             if (draftContent) {
                 document.getElementById("editor").innerHTML = draftContent;
+            }
+            const selectedFont = localStorage.getItem("selectedFont");
+            const selectedFontSize = localStorage.getItem("selectedFontSize");
+            const selectedFontColor = localStorage.getItem("selectedFontColor");
+
+            if (selectedFont) {
+                document.execCommand('fontName', false, selectedFont);
+            }
+            if (selectedFontSize) {
+                document.execCommand('fontSize', false, selectedFontSize);
+            }
+            if (selectedFontColor) {
+                document.execCommand('foreColor', false, selectedFontColor);
             }
         };
 
