@@ -36,10 +36,19 @@
     <h2>Select Font Color</h2>
     <label for="font-color">Choose a font color:</label>
     <input type="color" id="font-color" onchange="changeFontColor(this.value)">
+    <button onclick="selectFontColor()">Select</button>
 
     <script>
         function changeFontColor(color) {
-            document.execCommand('foreColor', false, color);
+            localStorage.setItem("selectedFontColor", color);
+        }
+
+        function selectFontColor() {
+            const color = localStorage.getItem("selectedFontColor");
+            if (color) {
+                document.execCommand('foreColor', false, color);
+                window.location.href = 'editor.html'; // Redirect back to editor
+            }
         }
     </script>
 </body>
