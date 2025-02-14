@@ -42,10 +42,19 @@
         <option value="5">Large</option>
         <option value="7">Extra Large</option>
     </select>
+    <button onclick="selectFontSize()">Select</button>
 
     <script>
         function changeFontSize(size) {
-            document.execCommand('fontSize', false, size);
+            localStorage.setItem("selectedFontSize", size);
+        }
+
+        function selectFontSize() {
+            const size = localStorage.getItem("selectedFontSize");
+            if (size) {
+                document.execCommand('fontSize', false, size);
+                window.location.href = 'editor.html'; // Redirect back to editor
+            }
         }
     </script>
 </body>
