@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Schedule Your Post</h2>
+    <label for="schedule-date">Select Date:</label>
+    <input type="date" id="schedule-date">
+    
+    <label for="schedule-time">Select Time:</label>
+    <input type="time" id="schedule-time">
+    
+    <div class="action-buttons">
+        <button onclick="schedulePost()">Schedule Post</button>
+    </div>
+
+    <script>
+        function schedulePost() {
+            const date = document.getElementById("schedule-date").value;
+            const time = document.getElementById("schedule-time").value;
+            if (date && time) {
+                alert("Post scheduled for: " + date + " at " + time);
+                // Here you can add logic to save the scheduled post to your database
+            } else {
+                alert("Please select both date and time.");
+            }
+        }
+    </script>
+</body>
+</html>
